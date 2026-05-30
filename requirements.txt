@@ -7,7 +7,7 @@ certifi==2023.11.17
 charset-normalizer==3.3.2
 future==0.18.3
 idna==3.6
-lz4==4.3.3
+lz4==4.4.5
 paho-mqtt==1.6.1
 requests==2.31.0
 urllib3<2,>=1.26.5
