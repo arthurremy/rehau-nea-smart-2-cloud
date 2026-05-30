@@ -1,0 +1,5 @@
+{
+    "name": "Rehau Nea Smart 2.0 integration",
+    "homeassistant": "2024.3.1",
+    "render_readme": true
+}

@@ -1,0 +1,17 @@
+{
+  "domain": "rehau_nea_smart_2",
+  "name": "Rehua Nea Smart 2.0",
+  "codeowners": [
+    "@arthurremy"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/arthurremy/rehau-nea-smart-2-cloud",
+  "iot_class": "cloud_push",
+  "issue_tracker": "https://github.com/arthurremy/rehau-nea-smart-2-cloud/issues",
+  "requirements": [
+    "aiocron==1.8",
+    "schedule==1.2.2",
+    "curl_cffi==0.15.0"
+  ],
+  "version": "0.5.13"
+}

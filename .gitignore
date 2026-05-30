@@ -1,0 +1,18 @@
+# artifacts
+__pycache__
+.pytest*
+*.egg-info
+*/build/*
+*/dist/*
+
+
+# misc
+.coverage
+.vscode
+coverage.xml
+custom_components/rehau_nea_smart_2/mqtt/data/*
+
+
+# Home Assistant configuration
+config/*
+!config/configuration.yaml
