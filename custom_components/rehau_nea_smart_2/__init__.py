@@ -8,10 +8,13 @@ from __future__ import annotations
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_EMAIL, Platform
 from homeassistant.core import HomeAssistant, callback
-from homeassistant.exceptions import ConfigEntryAuthFailed
+from homeassistant.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
 
 from .rehau_mqtt_client.Controller import Controller
-from .rehau_mqtt_client.exceptions import MqttClientAuthenticationError
+from .rehau_mqtt_client.exceptions import (
+    MqttClientAuthenticationError,
+    MqttClientCommunicationError,
+)
 from .const import CONF_TOKEN_DATA, DOMAIN
 
 PLATFORMS: list[Platform] = [
@@ -50,6 +53,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         raise ConfigEntryAuthFailed(
             "REHAU re-authentication required (login expired)"
         ) from err
+    except MqttClientCommunicationError as err:
+        # Transient (rate limit / network) - let HA retry with backoff.
+        raise ConfigEntryNotReady(str(err)) from err
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     return True

@@ -595,7 +595,9 @@ class MqttClient:
     async def start_scheduler_task(self):
         """Start the scheduler in a separate thread."""
         _LOGGER.debug("Starting scheduler thread")
-        aiocron.crontab("*/1 * * * *", func=self.refresh_http, start=True)
+        # ponytail: every 5 min; REHAU rate-limits (403 "Too Many Requests")
+        # and the cloud data only refreshes ~5 min anyway. Slower if still throttled.
+        aiocron.crontab("*/5 * * * *", func=self.refresh_http, start=True)
         aiocron.crontab("*/5 * * * *", func=self.request_server_referentials, start=True)
         if "access_token" in self.token_data:
             _LOGGER.debug("Scheduling token refresh")

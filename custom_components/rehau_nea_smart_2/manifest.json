@@ -13,5 +13,5 @@
     "schedule==1.2.2",
     "curl_cffi==0.15.0"
   ],
-  "version": "0.5.13"
+  "version": "0.5.14"
 }

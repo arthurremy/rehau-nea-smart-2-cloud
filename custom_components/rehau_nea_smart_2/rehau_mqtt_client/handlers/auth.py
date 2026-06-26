@@ -170,27 +170,13 @@ async def fetch_user_data(email: str, access_token: str) -> dict:
             f"Could not get user data (connected via {connected_ip}). 401 - token rejected."
         )
     if response.status_code != 200:
-        egress = await _get_egress_ip()
         raise MqttClientCommunicationError(
-            f"Could not get user data (connected via {connected_ip}, egress IP {egress}). "
-            f"Status code: {response.status_code}. "
+            f"Could not get user data. Status code: {response.status_code}. "
             f"Reason: {response.text[:120]}"
         )
     raw = response.json()
     log_response_shape("getuserdata_v2", raw)
     return raw["data"]["user"]
-
-
-async def _get_egress_ip() -> str:
-    """Best-effort public egress IP, via the same client config as the API call."""
-    try:
-        async with AsyncSession(curl_options=API_CURL_OPTIONS) as session:
-            r = await session.get(
-                "https://api.ipify.org", impersonate=API_IMPERSONATE, timeout=15
-            )
-        return r.text.strip()[:45]
-    except Exception:  # noqa: BLE001
-        return "unknown"
 
 
 class RehauAuthSession:
